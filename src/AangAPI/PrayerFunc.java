@@ -44,7 +44,7 @@ public class PrayerFunc extends AangUtil {
     }
 
     public int points() {
-        return ctx.prayer.points();
+        return client.getCurrentLevelStat()[SkillsFunc.PRAYER];
     }
 
     public boolean quickPrayerHas(int pray) {

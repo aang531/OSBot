@@ -1,9 +1,6 @@
 package AangAPI.DataTypes;
 
 import AangAPI.AangUtil;
-import org.powerbot.script.Condition;
-import org.powerbot.script.Random;
-import org.powerbot.script.Tile;
 
 public class Path {
 
@@ -35,7 +32,7 @@ public class Path {
         for(int i = Math.min(lastIndex + 2,tilePath.length - 1); i >= 0; i-- ){
             if( AangUtil.movement.tileOnMap(tilePath[i]) && tilePath[i].reachable()){
                 lastIndex = i;
-                if( (AangUtil.ctx.movement.destination().distanceTo(tilePath[i]) > 2 || !AangUtil.ctx.players.local().inMotion()) && AangUtil.ctx.players.local().tile().distanceTo(tilePath[i]) > 0 ) {
+                if( (AangUtil.movement.destination().distanceTo(tilePath[i]) > 2 || !AangUtil.localPlayer().inMotion()) && AangUtil.localPlayer().getTile().distanceTo(tilePath[i]) > 0 ) {
                     boolean ret = AangUtil.movement.walkTile(tilePath[i]);
                     AangUtil.sleep(200);
                     return ret;
@@ -45,9 +42,9 @@ public class Path {
             }
         }
         for(int i = tilePath.length-1; i >= Math.min(lastIndex + 2,tilePath.length - 1) && i >= 0; i-- ){
-            if( AangUtil.movement.tileOnMap(tilePath[i]) && tilePath[i].matrix(AangUtil.ctx).reachable()){
+            if( AangUtil.movement.tileOnMap(tilePath[i]) && tilePath[i].reachable()){
                 lastIndex = i;
-                if( (AangUtil.movement.destination().distanceTo(tilePath[i]) > 2 || !AangUtil.ctx.players.local().inMotion()) && AangUtil.ctx.players.local().tile().distanceTo(tilePath[i]) > 0 ) {
+                if( (AangUtil.movement.destination().distanceTo(tilePath[i]) > 2 || !AangUtil.localPlayer().inMotion()) && AangUtil.localPlayer().getTile().distanceTo(tilePath[i]) > 0 ) {
                     boolean ret = AangUtil.movement.walkTile(tilePath[i]);
                     AangUtil.sleep(200);
                     return ret;
@@ -58,5 +55,4 @@ public class Path {
         }
         return false;
     }
-
 }

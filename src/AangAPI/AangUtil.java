@@ -1,5 +1,10 @@
 package AangAPI;
 
+import AangAPI.DataTypes.Player;
+import org.osbot.rs07.accessor.XClient;
+
+import java.util.concurrent.Callable;
+
 public class AangUtil {
     public static void init(AangScript script)
     {
@@ -7,6 +12,7 @@ public class AangUtil {
     }
 
     public static AangScript script;
+    public static XClient client;
 
     public static final MiscFunc misc = MiscFunc.getInstance();
     public static final ObjectsFunc objects = ObjectsFunc.getInstance();
@@ -22,12 +28,12 @@ public class AangUtil {
     public static final GameFunc game = GameFunc.getInstance();
     public static final CameraFunc camera = CameraFunc.getInstance();
     public static final ChatFunc chat = ChatFunc.getInstance();
-    public static final InteractFunc interact = InteractFunc.getInstance();
     public static final SkillsFunc skills = SkillsFunc.getInstance();
     public static final MouseFunc mouse = MouseFunc.getInstance();
     public static final KeyboardFunc keyboard = KeyboardFunc.getInstance();
     public static final VarpbitsFunc varpbits = VarpbitsFunc.getInstance();
     public static final TabsFunc tabs = TabsFunc.getInstance();
+    public static final MapFunc map = MapFunc.getInstance();
 
     public static void sleep( int millis ) {
         try {
@@ -35,6 +41,14 @@ public class AangUtil {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean sleep(Callable<Boolean> check, int interval, int checkTimes ) {
+        return AangScript.sleep(check,interval,checkTimes);
+    }
+
+    public static Player localPlayer(){
+        return new Player(script.myPlayer().accessor);
     }
 
     public static void log(String message){

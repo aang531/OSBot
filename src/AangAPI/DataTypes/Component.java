@@ -1,16 +1,23 @@
 package AangAPI.DataTypes;
 
 import AangAPI.AangUtil;
+import org.osbot.rs07.accessor.XRS2Widget;
 import org.osbot.rs07.api.model.Item;
 import org.osbot.rs07.api.ui.RS2Widget;
 
 import java.awt.*;
 
 public class Component {
-    RS2Widget osWidget;
+    public XRS2Widget osWidget;
+    private int thirdLevelID = -1;
 
-    public Component(RS2Widget osWidget) {
+    public Component(XRS2Widget osWidget) {
         this.osWidget = osWidget;
+    }
+
+    public Component(XRS2Widget osWidget, int thirdLevelID) {
+        this.osWidget = osWidget;
+        this.thirdLevelID = thirdLevelID;
     }
 
     public Point randomPoint(){
@@ -22,7 +29,7 @@ public class Component {
     }
 
     public Point position(){
-        return osWidget.getPosition();
+        return new Point(osWidget.getX(), osWidget.getY());
     }
 
     public int width(){
@@ -34,7 +41,7 @@ public class Component {
     }
 
     public Rectangle bounds(){
-        return osWidget.getBounds();
+        return new Rectangle(osWidget.getX(), osWidget.getY(),osWidget.getWidth(), osWidget.getHeight());
     }
 
     public int itemID(){
@@ -45,20 +52,14 @@ public class Component {
         return osWidget.getInv();
     }
 
-    public Item[] items(){
-        return osWidget.getItems();
-    }
+    public int[] itemStackSizes() { return osWidget.getInvStackSizes(); }
 
     public Item item(){
-        return osWidget.getItems()[0];
+        return new Item(new RS2Widget(osWidget,thirdLevelID),osWidget.getItemId(),osWidget.getItemAmt());
     }
 
     public boolean valid(){
         return osWidget != null;
-    }
-
-    public boolean active() {
-        return osWidget.isVisible();//TODO might be wrong
     }
 
     public String text(){
@@ -66,15 +67,15 @@ public class Component {
     }
 
     public Component get(int i){
-        return new Component(osWidget.getChildWidget(i));
+        return new Component(osWidget.getChildren()[i],i);
     }
 
     public int childCount(){
-        return osWidget.getChildWidgets().length;
+        return osWidget.getChildren().length;
     }
 
     public Component[] childs(){
-        RS2Widget[] osWidgets = osWidget.getChildWidgets();
+        XRS2Widget[] osWidgets = osWidget.getChildren();
         Component[] ret = new Component[osWidgets.length];
         for (int i = 0; i < osWidgets.length; i++ ) {
             ret[i] = new Component(osWidgets[i]);

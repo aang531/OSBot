@@ -1,5 +1,9 @@
 package AangAPI;
 
+import AangAPI.DataTypes.Npc;
+import AangAPI.DataTypes.Tile;
+import org.osbot.rs07.accessor.XNPC;
+
 public class NpcsFunc extends AangUtil {
     private static NpcsFunc ourInstance = new NpcsFunc();
 
@@ -7,36 +11,30 @@ public class NpcsFunc extends AangUtil {
         return ourInstance;
     }
 
-    public Npc getNearest(int id ) {
-        List<Npc> npcs = ctx.npcs.get();
-        int closest = -1;
-        int closestDist = Integer.MAX_VALUE;
-        for(int i = 0; i < npcs.size(); i++ ) {
-            if( npcs.get(i).id() == id ) {
-                Tile pt = ctx.players.local().tile(), tt = npcs.get(i).tile();
-                int dx = pt.x() - tt.x();
-                int dy = pt.y() - tt.y();
-                int dist = dx*dx+dy*dy;
-                if( dist < closestDist ){
-                    closest = i;
-                    closestDist = dist;
+    public Npc[] getAll(){
+        final XNPC[] xnpcs = client.getLocalNpcs();
+        final Npc[] npcs = new Npc[xnpcs.length];
+        for( int i = 0; i < xnpcs.length; i++ )
+            if( xnpcs[i] != null )
+            npcs[i] = new Npc(xnpcs[i]);
+        return npcs;
+    }
+
+    public Npc getNearest(int id ){
+        final XNPC[] xnpcs = client.getLocalNpcs();
+        int dist = Integer.MAX_VALUE;
+        Npc ret = null;
+        Npc tmpnpc;
+        final Tile playerTile = localPlayer().getTile();
+        for( XNPC npc : xnpcs )
+            if( npc!=null&&npc.getDefinition()!=null)
+                if((tmpnpc = new Npc(npc)).getID() == id ){
+                    final int tmpDist = tmpnpc.getTile().sqrDistTo(playerTile);
+                    if( tmpDist < dist ){
+                        dist = tmpDist;
+                        ret = tmpnpc;
+                    }
                 }
-            }
-        }
-        if( closest != -1 )
-            return npcs.get(closest);
-        return null;
-    }
-
-    public boolean attackMonster( final Npc npc ) {
-        return interact.clickInteractableCC(npc, "Attack",npc.name() + "  (level-" + npc.combatLevel() + ")");
-    }
-
-    public boolean click( final Npc npc, String action ) {
-        return interact.clickInteractableCC(npc, action,npc.name() + (npc.combatLevel() != 0 ? "  (level-" + npc.combatLevel() + ")" : ""));
-    }
-
-    public boolean useItem( final Npc npc) {
-        return interact.clickInteractableCC(npc, "Use",inventory.selectedItem().name() + " -> " + npc.name() + (npc.combatLevel() != 0 ? "  (level-" + npc.combatLevel() + ")" : ""));
+        return ret;
     }
 }

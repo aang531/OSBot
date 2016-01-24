@@ -33,6 +33,6 @@ public class SkillsFunc extends AangUtil {
     public static final int CONSTRUCTION = 22;
 
     public int exp(int skill){
-        return ctx.client().getSkillExps()[skill];
+        return client.getLevelExperience()[skill];
     }
 }

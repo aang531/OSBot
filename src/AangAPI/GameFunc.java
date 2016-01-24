@@ -1,6 +1,5 @@
 package AangAPI;
 
-import org.osbot.rs07.accessor.XClient;
 import org.osbot.rs07.api.Client;
 
 public class GameFunc extends AangUtil {
@@ -11,11 +10,11 @@ public class GameFunc extends AangUtil {
     }
 
     public boolean playing() {
-       return script.client.isLoggedIn();
+       return script.getClient().isLoggedIn();
     }
 
     public boolean loading() {
-        return script.client.getLoginState() == Client.LoginState.LOADING; //TODO check this
+        return script.getClient().getLoginState() == Client.LoginState.LOADING;
     }
 
     public Crosshair getCrosshair() {

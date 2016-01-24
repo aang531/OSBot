@@ -56,6 +56,6 @@ public class ChatFunc extends AangUtil{
 
     public boolean pendingInput() {
         Component c = widgets.get(162, 32);
-        return c != null && c.active();
+        return c != null && c.valid();
     }
 }

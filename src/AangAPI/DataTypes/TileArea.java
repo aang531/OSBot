@@ -1,8 +1,5 @@
 package AangAPI.DataTypes;
 
-
-import org.powerbot.script.Tile;
-
 public class TileArea {
 
     public int x, y, width, height,floor;
@@ -24,6 +21,6 @@ public class TileArea {
     }
 
     public boolean contains(Tile t) {
-        return floor == t.floor() && t.x() >= x && t.x() <= x + width && t.y() >= y && t.y() <= y + height;
+        return floor == t.z && t.x >= x && t.x <= x + width && t.y >= y && t.y <= y + height;
     }
 }

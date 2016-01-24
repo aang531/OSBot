@@ -1,7 +1,6 @@
 package AangAPI;
 
-import org.powerbot.bot.rt4.client.Client;
-import org.powerbot.script.MenuCommand;
+import org.osbot.rs07.api.Menu;
 
 import java.awt.*;
 
@@ -22,12 +21,16 @@ public class MenuFunc extends AangUtil {
         return false;
     }
 
-    private String[] actions(){
-        return ctx.client().getMenuActions();
+    public String[] actions(){
+        return script.getClient().accessor.getMenuAction();
+    }
+
+    public String[] names(){
+        return script.getClient().accessor.getMenuSpecificAction();
     }
 
     private int count(){
-        return ctx.client().getMenuCount()/15;
+        return script.getClient().accessor.getMenuCount();
     }
 
     public int getActionIndex(String action){
@@ -40,10 +43,12 @@ public class MenuFunc extends AangUtil {
         return -1;
     }
 
-    public int getIndex(String action, String option){
-        final MenuCommand[] commands = ctx.menu.commands();
-        for( int i = 0; commands.length > i; i++ ){
-            if( commands[i].action.equals(action) && commands[i].option.equals(option) ){
+    public int getIndex(String action, String name){
+        final String[] names = names();
+        final String[] actions = actions();
+        final int count = count();
+        for( int i = 0; count > i; i++ ){
+            if( actions[i].equals(action) && names[i].equals(name) ){
                 return i;
             }
         }
@@ -51,12 +56,12 @@ public class MenuFunc extends AangUtil {
     }
 
     public Rectangle bounds(){
-        Client client = ctx.client();
-        return new Rectangle(client.getMenuX(), client.getMenuY(), client.getMenuWidth(), client.getMenuHeight());
+        Menu menu = script.getMenuAPI();
+        return new Rectangle(menu.getX(), menu.getY(), menu.getWidth(), menu.getHeight());
     }
 
     public boolean opened(){
-        return ctx.client().isMenuOpen();
+        return script.getMenuAPI().isOpen();
     }
 
     public void close(){

@@ -7,7 +7,8 @@ public class GroundItemFunc extends AangUtil {
         return ourInstance;
     }
 
-    public GroundItem get(int id){
+    //TODO
+    /*public GroundItem get(int id){
         for(GroundItem gi : ctx.groundItems.get() )
             if( gi.id() == id )
                 return gi;
@@ -60,5 +61,5 @@ public class GroundItemFunc extends AangUtil {
             }
         }
         return false;
-    }
+    }*/
 }

@@ -27,7 +27,7 @@ public class MouseFunc extends AangUtil {
         return click(true);
     }
 
-    public Point position(){
+    public Point getPosition(){
         return script.getMouse().getPosition();
     }
 

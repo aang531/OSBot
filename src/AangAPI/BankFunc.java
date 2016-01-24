@@ -2,8 +2,6 @@ package AangAPI;
 
 import AangAPI.DataTypes.Component;
 
-import java.util.concurrent.Callable;
-
 public class BankFunc extends AangUtil {
     private static BankFunc ourInstance = new BankFunc();
 
@@ -61,13 +59,8 @@ public class BankFunc extends AangUtil {
         if( index == -1 ) {
             if( !widgets.clickComponentItem(c, "Withdraw-X") )
                 return false;
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return ChatFunc.getInstance().pendingInput();
-                }
-            },100);
-            if( ChatFunc.getInstance().pendingInput() ){
+            sleep(() -> ChatFunc.getInstance().pendingInput(), 100, 30 );
+            if( chat.pendingInput() ){
                 keyboard.sendln(""+amount);
                 sleep(80);
                 return true;

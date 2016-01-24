@@ -17,11 +17,11 @@ public class WidgetFunc extends AangUtil {
     }
 
     public Component get(int widget, int component){
-        return new Component(script.getWidgets().get(widget,component));
+        return new Component(client.getWidgets()[widget][component]);
     }
 
     public Component get(int widget, int component, int component2) {
-        return new Component(script.getWidgets().get(widget,component,component2));
+        return new Component(client.getWidgets()[widget][component].getChildren()[component2],component2);
     }
 
     public Widget get(int widget) {
@@ -29,11 +29,11 @@ public class WidgetFunc extends AangUtil {
     }
 
     public Widget widget(int widget){
-        return new Widget(widget);
+        return get(widget);
     }
 
     public boolean active(int widget){
-        return script.getWidgets().getValid()[widget];
+        return client.getValidWidgets()[widget];
     }
 
     public boolean clickComponent(Component c){

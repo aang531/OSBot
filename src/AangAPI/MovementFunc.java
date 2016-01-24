@@ -1,9 +1,8 @@
 package AangAPI;
 
 import AangAPI.DataTypes.Path;
-import org.powerbot.script.Condition;
-import org.powerbot.script.Random;
-import org.powerbot.script.Tile;
+import AangAPI.DataTypes.Tile;
+import org.osbot.rs07.api.map.Position;
 
 import java.awt.*;
 
@@ -39,6 +38,10 @@ public class MovementFunc extends AangUtil {
         return true;
     }
 
+    public Tile destination(){
+        return new Tile(script.getMap().getDestination());
+    }
+
     public boolean tileOnMap(Tile t){
         Point p = t.mapPoint();
         return p.x > 570 && p.x < 570 + 145 && p.y > 9 && p.y < 9 + 151 &&
@@ -70,5 +73,13 @@ public class MovementFunc extends AangUtil {
             sleep(50);
             return mouse.click(true);
         }else return false;
+    }
+
+    public Tile gridToTile(int x, int y, int z){
+        return new Tile((x>>7)+client.getMapBaseX(), (y>>7)+client.getMapBaseY(),z);
+    }
+
+    public Tile gridToTile(int x, int y){
+        return new Tile((x>>7)+client.getMapBaseX(), (y>>7)+client.getMapBaseY(),client.getPlane());
     }
 }

@@ -35,19 +35,19 @@ public class WorldFunc extends AangUtil {
 
     public void openWorldHop(){
         if( tabs.opened() != Tab.LOGOUT )
-            misc.openLogoutTab();
+            tabs.openLogoutTab();
         widgets.clickComponent(WIDGET_LOGOUT,5);
     }
 
     public void closeWorldHop(){
         if( tabs.opened() != Tab.LOGOUT )
-            misc.openLogoutTab();
+            tabs.openLogoutTab();
         widgets.clickComponent(WIDGET_WORLD_HOP,3);
     }
 
     public void sortOnMembers(){
         if( tabs.opened() != Tab.LOGOUT )
-            misc.openLogoutTab();
+            tabs.openLogoutTab();
         widgets.clickComponent(WIDGET_WORLD_HOP,9);
     }
 
@@ -56,7 +56,7 @@ public class WorldFunc extends AangUtil {
     }
 
     public int getCurrentWorld() {
-        return Integer.parseInt(widgets.get(429,1).text().substring(22));
+        return client.getCurrentWorld()-300;
     }
 
     private int getWorldFromComponent(Component c, int index){
@@ -65,7 +65,7 @@ public class WorldFunc extends AangUtil {
 
     public void hop(int world){
         if( tabs.opened() != Tab.LOGOUT )
-            misc.openLogoutTab();
+            tabs.openLogoutTab();
         Component c = widgets.get(WIDGET_WORLD_HOP,COMPONENT_WORLD_LIST);
         XTile x = script.getMap().getRegion().getTiles()[0][0][0];
         int worlds = c.childCount()/6;
