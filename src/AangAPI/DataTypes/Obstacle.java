@@ -50,7 +50,7 @@ public class Obstacle {
     private boolean checkObject(){
         RSObject o = AangUtil.objects.getAt(obstacleTile, id);
         if( o != null ) {
-            if( !AangUtil.misc.pointOnScreen(o.getCenterPoint()))
+            if( !AangUtil.misc.isPointOnScreen(o.getCenterPoint()))
                 return false;
             if(AangUtil.inventory.itemSelected() ){
                 AangUtil.inventory.unselectItem();
@@ -65,7 +65,7 @@ public class Obstacle {
     private boolean checkNPC(){
         Npc npc = AangUtil.npcs.getNearest(id);
         if( npc != null ) {
-            if( !AangUtil.misc.pointOnScreen(npc.getCenterPoint()))
+            if( !AangUtil.misc.isPointOnScreen(npc.getCenterPoint()))
                 return false;
             if(AangUtil.inventory.itemSelected() ){
                 AangUtil.inventory.unselectItem();

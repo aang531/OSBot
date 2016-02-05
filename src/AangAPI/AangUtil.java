@@ -1,6 +1,7 @@
 package AangAPI;
 
 import AangAPI.DataTypes.Player;
+import AangAPI.Function.*;
 import org.osbot.rs07.accessor.XClient;
 
 import java.util.concurrent.Callable;
@@ -34,6 +35,8 @@ public class AangUtil {
     public static final VarpbitsFunc varpbits = VarpbitsFunc.getInstance();
     public static final TabsFunc tabs = TabsFunc.getInstance();
     public static final MapFunc map = MapFunc.getInstance();
+    public static final RegionFunc region = RegionFunc.getInstance();
+    public static final PlayerFunc players = PlayerFunc.getInstance();
 
     public static void sleep( int millis ) {
         try {

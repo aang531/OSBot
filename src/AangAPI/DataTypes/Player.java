@@ -1,11 +1,10 @@
 package AangAPI.DataTypes;
 
+import AangAPI.DataTypes.Interfaces.Character;
 import org.osbot.rs07.accessor.XPlayer;
 
-import java.awt.*;
-
-public class Player extends Character{
-    XPlayer osplayer;
+public class Player extends Character {
+    public XPlayer osplayer;
 
     public Player( XPlayer osplayer){
         super(osplayer);
@@ -27,8 +26,7 @@ public class Player extends Character{
         return osplayer.getDefinition() != null;
     }
 
-    @Override
-    public Point getRandomPoint() {
-        return null;//TODO
+    public int[] getAppearance(){
+        return osplayer.getDefinition().getAppearance();
     }
 }

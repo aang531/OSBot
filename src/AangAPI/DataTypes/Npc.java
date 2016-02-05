@@ -1,20 +1,25 @@
 package AangAPI.DataTypes;
 
 import AangAPI.AangUtil;
+import AangAPI.DataTypes.Interfaces.Character;
+import AangAPI.DataTypes.Interfaces.Locatable;
 import org.osbot.rs07.accessor.XNPC;
-import org.osbot.rs07.accessor.XNPCDefinition;
+import org.osbot.rs07.api.def.NPCDefinition;
 import org.osbot.rs07.api.model.NPC;
 
 import java.awt.*;
 
 public class Npc extends Character {
     public XNPC osnpc;
-    XNPCDefinition def;
+    NPCDefinition def;
 
     public Npc(XNPC osnpc){
         super(osnpc);
         this.osnpc = osnpc;
-        def = osnpc.getDefinition();
+        final int id = osnpc.getDefinition().getId();
+        def = NPCDefinition.forId(id);
+        if( def.getRealId() != id && NPCDefinition.forId(def.getRealId()) != null )
+            def = NPCDefinition.forId(def.getRealId());
     }
 
     public Rectangle bounds(){
@@ -27,7 +32,7 @@ public class Npc extends Character {
 
     @Override
     public int getCombatLevel() {
-        return osnpc.getDefinition().getCombatLevel();
+        return def.getLevel();
     }
 
     @Override
@@ -38,11 +43,6 @@ public class Npc extends Character {
     @Override
     public boolean valid() {
         return osnpc.getDefinition() != null;
-    }
-
-    @Override
-    public Point getRandomPoint() {
-        return null;//TODO
     }
 
     public boolean attack() {
@@ -57,5 +57,13 @@ public class Npc extends Character {
     @Override
     public boolean useItem() {
         return clickIntractableCC("Use",AangUtil.inventory.getSelectedItemName() + " -> " + this.getName() + (this.getCombatLevel() != 0 ? "  (level-" + this.getCombatLevel() + ")" : ""));
+    }
+
+    public String[] getActions(){
+        return def.getActions();
+    }
+
+    public boolean isVisible(){
+        return def.isVisible();
     }
 }

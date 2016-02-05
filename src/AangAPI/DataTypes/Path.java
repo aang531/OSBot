@@ -30,7 +30,7 @@ public class Path {
                 return true;
         }
         for(int i = Math.min(lastIndex + 2,tilePath.length - 1); i >= 0; i-- ){
-            if( AangUtil.movement.tileOnMap(tilePath[i]) && tilePath[i].reachable()){
+            if( tilePath[i].isOnMinimap() && tilePath[i].reachable()){
                 lastIndex = i;
                 if( (AangUtil.movement.destination().distanceTo(tilePath[i]) > 2 || !AangUtil.localPlayer().inMotion()) && AangUtil.localPlayer().getTile().distanceTo(tilePath[i]) > 0 ) {
                     boolean ret = AangUtil.movement.walkTile(tilePath[i]);
@@ -42,7 +42,7 @@ public class Path {
             }
         }
         for(int i = tilePath.length-1; i >= Math.min(lastIndex + 2,tilePath.length - 1) && i >= 0; i-- ){
-            if( AangUtil.movement.tileOnMap(tilePath[i]) && tilePath[i].reachable()){
+            if( tilePath[i].isOnMinimap() && tilePath[i].reachable()){
                 lastIndex = i;
                 if( (AangUtil.movement.destination().distanceTo(tilePath[i]) > 2 || !AangUtil.localPlayer().inMotion()) && AangUtil.localPlayer().getTile().distanceTo(tilePath[i]) > 0 ) {
                     boolean ret = AangUtil.movement.walkTile(tilePath[i]);
